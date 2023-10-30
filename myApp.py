@@ -1,5 +1,4 @@
 from tkinter import *
-from operaciones import *
 
 Raiz = Tk()
 
@@ -7,8 +6,8 @@ myFrame = Frame(Raiz, width=500, height=800)
 myFrame.config(bg="grey")
 myFrame.pack()
 
-
-
+operacion = ""
+resultado = 0
 #----------------------------------------------------
 
 numeropanel = StringVar()
@@ -23,9 +22,61 @@ panel.config(bg="#A0AEA9", fg="black")
 #----------------------------------------------------
 
 def numero(num):
-    numeropanel.set(numeropanel.get() + f"{num}")
+    global operacion
+    
+    if operacion != "":
+        numeropanel.set(num)
+        operacion=""
+    else:
+        numeropanel.set(numeropanel.get() + f"{num}")
+#----------------------------------------------------
 
+def suma(num):
+    global operacion
+    global resultado
+    
+    resultado += int(num)
+    operacion = "suma"
+    
+    numeropanel.set(resultado)
+    #----------------------------------------------------
 
+def resta(num):
+    global operacion
+    global resultado
+    
+    resultado -= int(num)
+    operacion = "resta"
+    
+    numeropanel.set(resultado)
+#----------------------------------------------------
+
+def multiplicacion(num):
+    global operacion
+    global resultado
+    
+    resultado = resultado * int(num)
+    operacion = "multiplicacion"
+    
+    numeropanel.set(resultado)
+#----------------------------------------------------
+
+def division(num):
+    global operacion
+    global resultado
+    
+    resultado /= int(num)
+    operacion = "division"
+    
+    numeropanel.set(resultado)
+#----------------------------------------------------
+
+def resultadototal():
+    global resultado
+    
+    numeropanel.set(resultado + int(numeropanel.get()))
+    
+    resultado = 0
 
 #----------------------------------------------------
 
@@ -37,12 +88,12 @@ boton9 = Button(myFrame, text="9", width=3, command=lambda:numero(9))
 boton9.grid(row=1, column=2)
 
 
-boton_suma = Button(myFrame, text="+", command=suma, width=3)
+boton_suma = Button(myFrame, text="+", width=3, command=lambda:suma(numeropanel.get()))
 boton_suma.grid(row=1, column=3)
 
 
 #----------------------------------------------------
-boton_resta = Button(myFrame, text="-", command=resta, width=3)
+boton_resta = Button(myFrame, text="-", width=3, command=lambda:resta(numeropanel.get()))
 boton_resta.grid(row=2, column=3)
 
 boton4 = Button(myFrame, text="4", width=3, command=lambda:numero(4))
@@ -54,7 +105,7 @@ boton6.grid(row=2, column=2)
 
 
 #----------------------------------------------------
-boton_multiplicacion = Button(myFrame, text="*", command=multiplicacion, width=3)
+boton_multiplicacion = Button(myFrame, text="*", width=3, command=lambda:multiplicacion(numeropanel.get()))
 boton_multiplicacion.grid(row=3, column=3)
 
 boton1 = Button(myFrame, text="1", width=3, command=lambda:numero(1))
@@ -66,14 +117,14 @@ boton3.grid(row=3, column=2)
 
 
 #----------------------------------------------------
-boton_division = Button(myFrame, text="/", command=division, width=3)
+boton_division = Button(myFrame, text="/", width=3, command=lambda:division(numeropanel.get()))
 boton_division.grid(row=4, column=3)
 
 botonpotencia = Button(myFrame, text="**", width=3)
 botonpotencia.grid(row=4, column=0)
 boton0 = Button(myFrame, text="0", width=3)
 boton0.grid(row=4, column=1)
-botonIgual = Button(myFrame, text="=", width=3)
+botonIgual = Button(myFrame, text="=", width=3, command=lambda:resultadototal())
 botonIgual.grid(row=4, column=2)
 
 
